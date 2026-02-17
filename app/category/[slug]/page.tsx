@@ -65,6 +65,7 @@ const CategoryPage = () => {
       name: "Dolo 650",
       price: "₹30",
       weight: "15 strips",
+      floor:"F1",
       img: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=400",
     },
     {
@@ -72,6 +73,7 @@ const CategoryPage = () => {
       name: "Vicks Vaporub",
       price: "₹95",
       weight: "25ml",
+      floor:"F2",
       img: "https://images.unsplash.com/photo-1631549916768-4119b2e5f926?auto=format&fit=crop&q=80&w=400",
     },
     {
@@ -79,6 +81,7 @@ const CategoryPage = () => {
       name: "N95 Mask",
       price: "₹150",
       weight: "1 unit",
+      floor:"F1",
       img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=400",
     },
     {
@@ -86,6 +89,7 @@ const CategoryPage = () => {
       name: "Hand Sanitizer",
       price: "₹50",
       weight: "100ml",
+      floor:"F2",
       img: "https://images.unsplash.com/photo-1584483766114-2cea6facdf57?auto=format&fit=crop&q=80&w=400",
     },
   ];
@@ -294,55 +298,66 @@ const CategoryPage = () => {
               ) : (
                 <section className="px-4 mt-4 pb-32">
                   <div className="grid grid-cols-3 gap-x-2 gap-y-6">
-                    {shopProducts.map((p) => {
-                      const qty = cart[p.id] || 0;
-                      return (
-                        <div key={p.id} className="flex flex-col items-center">
-                          <div className="w-full aspect-2/3 bg-white shadow-md rounded-2xl border border-gray-100 relative overflow-hidden mb-2">
-                            <img
-                              src={p.img}
-                              alt={p.name}
-                              className="aspect-vedio"
-                            />
-                            <div className="absolute bottom-2 inset-x-2">
-                              {qty === 0 ? (
-                                <button
-                                  onClick={() => updateCart(p.id, 1)}
-                                  className="w-full h-8 flex items-center justify-center border-2 border-green-600 rounded-2xl text-xl text-green-700 bg-white/90 active:scale-95 transition-all"
-                                >
-                                  <span className="leading-none pb-1">+</span>
-                                </button>
-                              ) : (
-                                <div className="w-full h-8 bg-green-600 rounded-2xl flex justify-between items-center text-white shadow-lg">
-                                  <button
-                                    onClick={() => updateCart(p.id, -1)}
-                                    // Added h-full and flex to center the minus sign
-                                    className="h-full flex-1 flex items-center justify-center font-bold text-xl active:scale-125 transition-transform"
-                                  >
-                                    <span className="leading-none pb-1">−</span>
-                                  </button>
-
-                                  <span className="text-lg font-black tracking-tighter leading-none">
-                                    {qty}
-                                  </span>
-
+                    {shopProducts
+                      .filter((p) => {
+                        // If "ALL" is selected, show everything.
+                        // Otherwise, match the product's floor with the activeFloor state.
+                        if (activeFloor === "ALL") return true;
+                        return p.floor === activeFloor;
+                      })
+                      .map((p) => {
+                        const qty = cart[p.id] || 0;
+                        return (
+                          <div
+                            key={p.id}
+                            className="flex flex-col items-center"
+                          >
+                            {/* ... rest of your existing product card UI (no changes needed here) ... */}
+                            <div className="w-full aspect-2/3 bg-white shadow-md rounded-2xl border border-gray-100 relative overflow-hidden mb-2">
+                              <img
+                                src={p.img}
+                                alt={p.name}
+                                className="aspect-video object-cover"
+                              />
+                              <div className="absolute bottom-2 inset-x-2">
+                                {qty === 0 ? (
                                   <button
                                     onClick={() => updateCart(p.id, 1)}
-                                    // Added h-full and flex to center the plus sign
-                                    className="h-full flex-1 flex items-center justify-center font-bold text-xl active:scale-125 transition-transform"
+                                    className="w-full h-8 flex items-center justify-center border-2 border-green-600 rounded-2xl text-xl text-green-700 bg-white/90 active:scale-95 transition-all"
                                   >
                                     <span className="leading-none pb-1">+</span>
                                   </button>
-                                </div>
-                              )}
-                            </div>
-                            <h4 className="font-semibold text-sm px-2  text-gray-600 pt-2 w-full">
+                                ) : (
+                                  <div className="w-full h-8 bg-green-600 rounded-2xl flex justify-between items-center text-white shadow-lg">
+                                    <button
+                                      onClick={() => updateCart(p.id, -1)}
+                                      className="h-full flex-1 flex items-center justify-center font-bold text-xl active:scale-125 transition-transform"
+                                    >
+                                      <span className="leading-none pb-1">
+                                        −
+                                      </span>
+                                    </button>
+                                    <span className="text-lg font-black tracking-tighter leading-none">
+                                      {qty}
+                                    </span>
+                                    <button
+                                      onClick={() => updateCart(p.id, 1)}
+                                      className="h-full flex-1 flex items-center justify-center font-bold text-xl active:scale-125 transition-transform"
+                                    >
+                                      <span className="leading-none pb-1">
+                                        +
+                                      </span>
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
+                            <h4 className=" text-sm px-2 text-gray-600 pt-2 w-full ">
                               {p.name}
                             </h4>
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
                   </div>
                 </section>
               )}
