@@ -85,7 +85,6 @@ export default function Home() {
         <Header />
         {/* 3. SCROLL FIX: The 'main' tag must be allowed to grow and scroll */}
         <main className="flex-1 overflow-y-auto pt-2">{renderView()}</main>
-
         {/* Footer */}
         <Footer activeTab={activeTab} setActiveTab={setActiveTab} />
       </div>

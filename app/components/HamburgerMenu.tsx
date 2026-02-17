@@ -49,45 +49,51 @@ const HamburgerMenu = () => {
 
       {/* 3. SIDE DRAWER */}
       <div
-        className={`absolute top-0 right-0 bottom-0 z-60 bg-white shadow-[-20px_25px_50px_-12px_rgba(0,0,0,0.25)] transform transition-transform duration-500 ease-in-out 
-        ${isOpen ? "translate-x-0" : "translate-x-full hidden"}
-        w-[80%] sm:w-80`}
+        className={`fixed top-0 right-0 bottom-0 z-60 bg-white shadow-[-20px_25px_50px_-12px_rgba(0,0,0,0.25)] transform transition-transform duration-500 ease-in-out 
+  ${isOpen ? "translate-x-0" : "translate-x-full"}
+  w-[80%] sm:w-80 flex flex-col`} // Added flex-col here
       >
-        <div className="flex flex-col justify-between pt-24 text-black">
-          <div className="space-y-10">
+        {/* TOP CONTENT AREA */}
+        <div className="flex-1 pt-24 overflow-y-auto">
+          <div className="space-y-10 text-black">
             {/* SECTION 1: TEAM */}
-            <section className="flex justify-start items-center ">
-              <div className="text-gray-900">
+            <section className="flex justify-start items-center cursor-pointer active:opacity-60 transition">
+              <div className="w-16 flex justify-center">
                 <img
-                  className="px-4"
                   src="/images/header/team.png"
                   alt="teams"
+                  className="h-6 w-6 object-contain"
                 />
               </div>
-              <p className="text-[#696969] font-semibold">Team behind chotu</p>
+              <p className="text-[#696969] font-semibold text-sm">
+                Team behind chotu
+              </p>
             </section>
 
             {/* SECTION 2: TERMS */}
-            <section className="flex gap-2 justify-start items-center">
-              <div className="text-gray-900">
+            <section className="flex justify-start items-center cursor-pointer active:opacity-60 transition">
+              <div className="w-16 flex justify-center">
                 <img
-                  className="px-4 "
                   src="/images/header/team.png"
                   alt="Logo"
+                  className="h-6 w-6 object-contain"
                 />
               </div>
-              <p className="text-[#696969] font-semibold">Terms and Conditions</p>
+              <p className="text-[#696969] font-semibold text-sm">
+                Terms and Conditions
+              </p>
             </section>
           </div>
-
-          <footer className="border-t border-gray-100 absolute bottom-12">
-              <img
-                className="object-cover"
-                src="/images/header/sidebarfooter.png"
-                alt="Logo"
-              />
-          </footer>
         </div>
+
+        {/* RESPONSIVE FOOTER */}
+        <footer className="w-full border-t border-gray-100 bg-gray-50 pb-safe">
+          <img
+            className="w-full h-auto object-cover"
+            src="/images/header/sidebarfooter.png"
+            alt="Footer Branding"
+          />
+        </footer>
       </div>
     </>
   );
